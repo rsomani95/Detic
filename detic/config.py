@@ -1,5 +1,10 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 from detectron2.config import CfgNode as CN
+from pathlib import Path
+
+PWD = Path(__file__).parent
+
+"../datasets/metadata/lvis_v1_train_cat_info.json"
 
 def add_detic_config(cfg):
     _C = cfg
@@ -8,7 +13,7 @@ def add_detic_config(cfg):
 
     # Open-vocabulary classifier
     _C.MODEL.ROI_BOX_HEAD.USE_ZEROSHOT_CLS = False # Use fixed classifier for open-vocabulary detection
-    _C.MODEL.ROI_BOX_HEAD.ZEROSHOT_WEIGHT_PATH = 'datasets/metadata/lvis_v1_clip_a+cname.npy'
+    _C.MODEL.ROI_BOX_HEAD.ZEROSHOT_WEIGHT_PATH = str(PWD / '../datasets/metadata/lvis_v1_clip_a+cname.npy')
     _C.MODEL.ROI_BOX_HEAD.ZEROSHOT_WEIGHT_DIM = 512
     _C.MODEL.ROI_BOX_HEAD.NORM_WEIGHT = True
     _C.MODEL.ROI_BOX_HEAD.NORM_TEMP = 50.0
@@ -20,7 +25,7 @@ def add_detic_config(cfg):
     _C.MODEL.ROI_BOX_HEAD.PRIOR_PROB = 0.01
     _C.MODEL.ROI_BOX_HEAD.USE_FED_LOSS = False # Federated Loss
     _C.MODEL.ROI_BOX_HEAD.CAT_FREQ_PATH = \
-        'datasets/metadata/lvis_v1_train_cat_info.json'
+        str(PWD / '../datasets/metadata/lvis_v1_train_cat_info.json')
     _C.MODEL.ROI_BOX_HEAD.FED_LOSS_NUM_CAT = 50
     _C.MODEL.ROI_BOX_HEAD.FED_LOSS_FREQ_WEIGHT = 0.5
 
@@ -79,8 +84,8 @@ def add_detic_config(cfg):
     _C.DATALOADER.DATASET_MIN_SIZES = [(640, 800), (320, 400)] # Used when USE_DIFF_BS_SIZE is on
     _C.DATALOADER.DATASET_MAX_SIZES = [1333, 667] # Used when USE_DIFF_BS_SIZE is on
     _C.DATALOADER.USE_TAR_DATASET = False # for ImageNet-21K, directly reading from unziped files
-    _C.DATALOADER.TARFILE_PATH = 'datasets/imagenet/metadata-22k/tar_files.npy'
-    _C.DATALOADER.TAR_INDEX_DIR = 'datasets/imagenet/metadata-22k/tarindex_npy'
+    _C.DATALOADER.TARFILE_PATH = str(PWD / '../datasets/imagenet/metadata-22k/tar_files.npy')
+    _C.DATALOADER.TAR_INDEX_DIR = str(PWD / '../datasets/imagenet/metadata-22k/tarindex_npy')
     
     _C.SOLVER.USE_CUSTOM_SOLVER = False
     _C.SOLVER.OPTIMIZER = 'SGD'
